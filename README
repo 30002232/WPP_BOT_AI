@@ -1,0 +1,28 @@
+executar o Docker
+
+docker-compose up --build
+
+http://localhost:3000/dashboard/
+
+http://api:5000/chatbot/webhook/
+
+Groq API Keys
+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
+
+pip install flask
+pip install langchain
+pip install langchain_groq
+pip install python-decouple
+pip install langchain_chroma
+pip install langchain_community
+pip install langchain_huggingface
+pip install pypdf
+pip install chromadb
+
+pip freeze > requirements.txt
+
+#abrir outro ps para executar o rag.py
+docker exec -it wpp_bot_api /bin/bash
+
+# Dentro do container
+python /app/rag/rag.py
