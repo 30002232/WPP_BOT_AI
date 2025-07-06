@@ -1,20 +1,24 @@
 services:
 
+  #Serviço WAHA: responsável por ligar o WhatsApp ao backend via API
   waha:
-    image: devlikeapro/waha:latest
-    container_name: wpp_bot_waha
-    restart: always
+    image: devlikeapro/waha:latest          #Usa a imagem WAHA oficial da DockerHub
+    container_name: wpp_bot_waha            #Nome do contentor no Docker
+    restart: always                         #Reinicia automaticamente em caso de falha
 
     ports:
-      - '3000:3000'
+      - '3000:3000'                         #Expõe a porta 3000 (WAHA API) para o host
 
+  #Serviço da tua API Flask (que contém o webhook + integração com IA)
   api:
     build:
-      context: .
-      dockerfile: Dockerfile.api
-    container_name: wpp_bot_api
+      context: .                            #Usa o diretório atual como contexto de build
+      dockerfile: Dockerfile.api            #Dockerfile usado para construir a imagem da API
+    container_name: wpp_bot_api             #Nome do contentor
     ports:
-      - '5000:5000'
-    volumes:
-      - .:/app
-      - ./chroma_data:/app/chroma_data
+      - '5000:5000'                         #Expõe a API Flask na porta 5000
+    volumes:  
+      - .:/app                              #Monta o código fonte dentro do contentor
+      - ./chroma_data:/app/chroma_data      #Monta o volume de dados persistentes (vetores)
+    depends_on:
+      - waha                               

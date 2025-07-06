@@ -1,17 +1,29 @@
-FROM python:3.11-slim
+# Usa uma imagem base leve do Python 3.11
+FROM python:3.11-slim                                               
 
-ENV PYTHONUNBUFFERED=1
+# Garante que a saída do Python seja exibida imediatamente (sem buffer)
+ENV PYTHONUNBUFFERED=1                                             
 
-WORKDIR /app
+# Define o diretório de trabalho dentro do container
+WORKDIR /app                                                       
 
-COPY requirements.txt requirements.txt
-RUN python -m pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
+# Copia o ficheiro de dependências para o container
+COPY requirements.txt requirements.txt                             
 
-COPY . .
+# Atualiza o pip para a versão mais recente
+RUN python -m pip install --upgrade pip                            
 
-ENV FLASK_APP=app.py
+# Instala as dependências listadas no requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt                  
 
-EXPOSE 5000
+# Copia todos os ficheiros do projeto para o diretório de trabalho no container
+COPY . .                                                           
 
-CMD ["flask", "run", "--host=0.0.0.0", "--port=5000", "--debug"]
+# Define a variável de ambiente que indica o ficheiro principal da aplicação Flask
+ENV FLASK_APP=app.py                                                
+
+# Expõe a porta 5000 (usada pelo servidor Flask)
+EXPOSE 5000                                                         
+
+# Comando que será executado ao iniciar o container: inicia o servidor Flask
+CMD ["flask", "run", "--host=0.0.0.0", "--port=5000", "--debug"]                                      

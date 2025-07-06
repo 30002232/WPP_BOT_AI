@@ -1,14 +1,10 @@
-executar o Docker
-
-docker-compose up --build
-
-http://localhost:3000/dashboard/
-
-http://api:5000/chatbot/webhook/
-
+# API do Groq
 Groq API Keys
 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
 
+executar o Docker
+
+#Só é necessário executar caso não existam estas dependências no computador
 pip install flask
 pip install langchain
 pip install langchain_groq
@@ -19,10 +15,25 @@ pip install langchain_huggingface
 pip install pypdf
 pip install chromadb
 
+#Só é executado no caso de adicionarmos mais alguma dependência 
 pip freeze > requirements.txt
 
-#abrir outro ps para executar o rag.py
+#Num terminal executar
+docker-compose up --build
+
+#Dashboard do Waha
+http://localhost:3000/dashboard/
+
+#Webhook
+http://api:5000/chatbot/webhook/
+
+#Abrir outro ps para executar o rag.py
 docker exec -it wpp_bot_api /bin/bash
 
-# Dentro do container
+#Dentro do container executar
 python /app/rag/rag.py
+
+#nota
+#optamos por uniformizar o nome do documento PDF(my_document.pdf) 
+#assim se alterarmos para outro pdf e usarmos esse mesmo nome 
+#não necessitamos de alterar o codigo.
